@@ -63,3 +63,51 @@ const galleryItems = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
+// Создание и рендер разметки по массиву данных galleryItems из app.js и предоставленному шаблону
+
+const refs = {
+  gallery: document.querySelector('.js-gallery'),
+  modal: document.querySelector('.js-lightbox'),
+  modalImage: document.querySelector('.lightbox__image'),
+  modalButton: document.querySelector('.lightbox__button'),
+};
+
+const makeGallery = ({ preview, original, description }) => {
+
+  const galleryImg = document.createElement('img');
+  galleryImg.src = preview;
+  galleryImg.dataset.source = original;
+  galleryImg.alt = description;
+  galleryImg.classList.add('gallery__image');
+
+  const galleryLink = document.createElement('a');
+  galleryLink.classList.add('gallery__link');
+  galleryLink.href = galleryImg.dataset.source;
+  galleryLink.appendChild(galleryImg);
+
+  const galleryItem = document.createElement('li');
+  galleryItem.classList.add('gallery__item');
+  galleryItem.appendChild(galleryLink);
+
+  return galleryItem;
+};
+
+const images = galleryItems.map(makeGallery);
+refs.gallery.append(...images);
+
+// Реализация делегирования на галерее ul.js-gallery и получение url большого изображения
+
+refs.gallery.addEventListener('click', onOpenModal)
+
+// Открытие модального окна по клику на элементе галереи
+
+function onOpenModal(event) {
+  event.preventDefault();
+}
+
+// Подмена значения атрибута src элемента img.lightbox__image
+
+// Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"]
+
+// Очистка значения атрибута src элемента img.lightbox__image
