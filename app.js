@@ -112,12 +112,21 @@ function onOpenModal(event) {
 
   refs.modal.classList.add('is-open');
 
-  // Подмена значения атрибута src элемента img.lightbox__image
-  refs.modalImage.src = event.target.dataset.source;
-  refs.modalImage.alt = event.target.alt;
-  console.log(refs.modalImage.src);
-  console.log(refs.modalImage.alt);
+  addImageDetails(event);
+}
 
+// Подмена значения атрибута src элемента img.lightbox__image
+function addImageDetails(event) {
+
+  refs.modalImage.alt = event.target.alt;
+
+  if (refs.modal.classList.contains('is-open')) {
+    refs.modalImage.src = event.target.dataset.source;
+  } else {
+    refs.modalImage.src = '';
+  };
+
+  
 }
 
 // Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"]
@@ -133,7 +142,7 @@ function onCloseModal(event) {
   
   // Очистка значения атрибута src элемента img.lightbox__image
 
-  refs.modalImage.src = '';
+  addImageDetails(event);
 }
 
 // Закрытие модального окна по нажатию клавиши ESC
@@ -142,6 +151,7 @@ document.addEventListener('keydown', onCloseModalESC);
 
 function onCloseModalESC(event) {
   if (event.keyCode == 27) {
-    refs.modal.classList.remove('is-open');
+    // refs.modal.classList.remove('is-open');
+    onCloseModal(event);
   }
 }
