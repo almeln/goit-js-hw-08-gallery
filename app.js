@@ -151,7 +151,6 @@ document.addEventListener('keydown', onCloseModalESC);
 
 function onCloseModalESC(event) {
   if (event.keyCode == 27) {
-    // refs.modal.classList.remove('is-open');
     onCloseModal(event);
   }
 }
