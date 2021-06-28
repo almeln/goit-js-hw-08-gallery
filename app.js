@@ -74,7 +74,9 @@ const refs = {
   modalButton: document.querySelector('.lightbox__button'),
 };
 
-const makeGallery = ({ preview, original, description }) => {
+let currentIndex = 0;
+
+const makeGallery = ({ preview, original, description }, index) => {
 
   const galleryImg = document.createElement('img');
   galleryImg.src = preview;
@@ -90,21 +92,10 @@ const makeGallery = ({ preview, original, description }) => {
   const galleryItem = document.createElement('li');
   galleryItem.classList.add('gallery__item');
   galleryItem.appendChild(galleryLink);
-  // galleryItem.dataset.index = galleryItems.indexOf(galleryItem);
+  galleryItem.dataset.index = index;
 
   return galleryItem;
 };
-
-// const index = function (makeIndex) {
-//   for (let i = 0; i < galleryItems.length; i += 1) {
-//     i += 1;
-//   }
-//   return i;
-// };
-// console.log(galleryItems.length);
-
-// console.log(galleryItems.indexOf(galleryItem));
-
 
 const images = galleryItems.map(makeGallery);
 refs.gallery.append(...images);
@@ -125,6 +116,8 @@ function onOpenModal(event) {
   refs.modal.classList.add('is-open');
 
   addImageDetails(event);
+
+  // window.addEventListener("keydown", keyHendler)
 }
 
 // Подмена значения атрибута src элемента img.lightbox__image
@@ -159,36 +152,36 @@ function onCloseModal(event) {
 
 // Закрытие модального окна по нажатию клавиши ESC
 
-document.addEventListener('keydown', onCloseModalESC);
+window.addEventListener("keydown", keyHendler)
 
-function onCloseModalESC(event) {
+function keyHendler(event) {
   if (event.code === "Escape") {
     onCloseModal(event);
+  } else if (event.code === "ArrowRight") {
+    onArrowRight(event);
+  } else if (event.code === "ArrowLeft") {
+    onArrowLeft(event);
   }
 }
 
 // Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо"
 
-// function onArrowRight() {
-//   if (currentIndex + 1 > galleryItems.length - 1) {
-//     currentIndex = 0;
-//   } else {
-//     currentIndex += 1;
-//   }
-//   lightBoxImgContent(
-//     galleryItems[currentIndex].original,
-//     galleryItems[currentIndex].description,
-//   );
-// }
+function onArrowRight(event) {
+  if (currentIndex + 1 > galleryItems.length - 1) {
+    currentIndex = 0;
+  } else {
+    currentIndex += 1;
+  }
+  refs.modalImage.src = galleryItems[currentIndex].original;
+  refs.modalImage.alt = galleryItems[currentIndex].description;
+}
 
-// function onArrowLeft() {
-//   if (currentIndex - 1 < 0) {
-//     currentIndex = galleryItems.length - 1;
-//   } else {
-//     currentIndex -= 1;
-//   }
-//   lightBoxImgContent(
-//     galleryItems[currentIndex].original,
-//     galleryItems[currentIndex].description,
-//   );
-// }
+function onArrowLeft(event) {
+  if (currentIndex - 1 < 0) {
+    currentIndex = galleryItems.length - 1;
+  } else {
+    currentIndex -= 1;
+  }
+  refs.modalImage.src = galleryItems[currentIndex].original;
+  refs.modalImage.alt = galleryItems[currentIndex].description;
+}
