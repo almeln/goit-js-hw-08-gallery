@@ -90,9 +90,21 @@ const makeGallery = ({ preview, original, description }) => {
   const galleryItem = document.createElement('li');
   galleryItem.classList.add('gallery__item');
   galleryItem.appendChild(galleryLink);
+  // galleryItem.dataset.index = galleryItems.indexOf(galleryItem);
 
   return galleryItem;
 };
+
+// const index = function (makeIndex) {
+//   for (let i = 0; i < galleryItems.length; i += 1) {
+//     i += 1;
+//   }
+//   return i;
+// };
+// console.log(galleryItems.length);
+
+// console.log(galleryItems.indexOf(galleryItem));
+
 
 const images = galleryItems.map(makeGallery);
 refs.gallery.append(...images);
@@ -150,7 +162,33 @@ function onCloseModal(event) {
 document.addEventListener('keydown', onCloseModalESC);
 
 function onCloseModalESC(event) {
-  if (event.keyCode == 27) {
+  if (event.code === "Escape") {
     onCloseModal(event);
   }
 }
+
+// Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо"
+
+// function onArrowRight() {
+//   if (currentIndex + 1 > galleryItems.length - 1) {
+//     currentIndex = 0;
+//   } else {
+//     currentIndex += 1;
+//   }
+//   lightBoxImgContent(
+//     galleryItems[currentIndex].original,
+//     galleryItems[currentIndex].description,
+//   );
+// }
+
+// function onArrowLeft() {
+//   if (currentIndex - 1 < 0) {
+//     currentIndex = galleryItems.length - 1;
+//   } else {
+//     currentIndex -= 1;
+//   }
+//   lightBoxImgContent(
+//     galleryItems[currentIndex].original,
+//     galleryItems[currentIndex].description,
+//   );
+// }
